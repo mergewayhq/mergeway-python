@@ -13,9 +13,6 @@ in
 
   languages.python = {
     enable = true;
-    libraries = with pkgs.python313Packages; [
-    ];
-
     uv = {
       enable = true;
       #sync.enable = true;
@@ -28,6 +25,14 @@ in
     
     hooks.ruff-format = {
       enable = true;
+      pass_filenames = false;
+    };
+
+    hooks.unit-tests = {
+      enable = true;
+      name = "unit-tests";
+      description = "Run Python unit tests";
+      entry = "uv run python -m unittest";
       pass_filenames = false;
     };
   };

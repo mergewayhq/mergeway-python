@@ -1,0 +1,27 @@
+mergeway:
+  version: 1
+
+entities:
+  User:
+    description: Directory of users who can author and moderate posts
+    include:
+      - data/users/*.yaml
+      - data/users/*.json
+    fields:
+      id:
+        type: string
+        required: true
+        description: Stable identifier shared across data files
+      name:
+        type: string
+        required: true
+        description: Display name rendered in UI surfaces
+      email:
+        type: string
+        required: true
+        description: Primary contact address for notifications
+      roles:
+        type: string
+        repeated: true
+        description: Role slugs that drive permission checks
+    identifier: id

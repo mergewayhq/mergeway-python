@@ -1,0 +1,18 @@
+mergeway:
+  version: 1
+
+entities:
+  Tag:
+    description: Controlled vocabulary for categorizing posts
+    include:
+      - data/tags/product.yaml
+    fields:
+      id:
+        type: string
+        required: true
+        description: Identifier referenced by posts and comments
+      label:
+        type: string
+        required: true
+        description: Human readable tag label
+    identifier: id
