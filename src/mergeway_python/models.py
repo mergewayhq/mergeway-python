@@ -1,3 +1,5 @@
+"""Shared model helpers for generated Mergeway entity classes."""
+
 from __future__ import annotations
 
 from dataclasses import fields, is_dataclass
@@ -70,11 +72,15 @@ def _deserialize_value(value: Any, annotation: Any) -> Any:
 
 
 class GeneratedModel:
+    """Base class for generated Mergeway entity and nested object models."""
+
     __mergeway_entity_name__: ClassVar[str]
     __mergeway_field_aliases__: ClassVar[dict[str, str]] = {}
 
     @classmethod
     def from_payload(cls, payload: Mapping[str, Any]) -> "GeneratedModel":
+        """Build a model instance from a Mergeway JSON payload."""
+
         type_hints = get_type_hints(cls, include_extras=True)
         aliases = getattr(cls, "__mergeway_field_aliases__", {})
         kwargs: dict[str, Any] = {}
@@ -90,6 +96,8 @@ class GeneratedModel:
         return cls(**kwargs)
 
     def to_payload(self) -> dict[str, Any]:
+        """Serialize a model instance to a Mergeway JSON payload."""
+
         aliases = getattr(type(self), "__mergeway_field_aliases__", {})
         payload: dict[str, Any] = {}
 

@@ -1,3 +1,5 @@
+"""Public package exports for mergeway-python."""
+
 from .codegen import generate_classes
 from .database import Database, MergewayCLIError
 from .models import GeneratedModel

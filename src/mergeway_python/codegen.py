@@ -1,3 +1,5 @@
+"""Schema-driven class generation for Mergeway repositories."""
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -250,6 +252,8 @@ def generate_classes(
     *,
     cli_binary: str = "mergeway-cli",
 ) -> Path:
+    """Generate a Python module of dataclasses from a Mergeway schema."""
+
     if hasattr(database_or_config, "list_entities") and hasattr(
         database_or_config, "entity_schema"
     ):

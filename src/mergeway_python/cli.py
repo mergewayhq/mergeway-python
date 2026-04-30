@@ -1,3 +1,5 @@
+"""Command-line entrypoints for mergeway-python."""
+
 from __future__ import annotations
 
 import argparse
@@ -8,6 +10,8 @@ from .database import Database
 
 
 def build_parser() -> argparse.ArgumentParser:
+    """Build the command-line argument parser."""
+
     parser = argparse.ArgumentParser(
         prog="mergeway-python",
         description="Python tooling for Mergeway repositories.",
@@ -39,12 +43,16 @@ def build_parser() -> argparse.ArgumentParser:
 
 
 def resolve_config_path(args: argparse.Namespace) -> Path:
+    """Resolve the config path from parsed CLI arguments."""
+
     if args.config is not None:
         return args.config
     return args.root / "mergeway.yaml"
 
 
 def main(argv: Sequence[str] | None = None) -> int:
+    """Run the mergeway-python CLI."""
+
     parser = build_parser()
     args = parser.parse_args(argv)
 

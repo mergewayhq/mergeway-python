@@ -1,3 +1,5 @@
+"""Database wrapper around ``mergeway-cli``."""
+
 from __future__ import annotations
 
 import importlib
@@ -23,9 +25,13 @@ except (
 
 
 class MergewayCLIError(RuntimeError):
+    """Raised when ``mergeway-cli`` exits with an error."""
+
     def __init__(
         self, message: str, *, command: list[str], stdout: str = "", stderr: str = ""
     ):
+        """Initialize the CLI error with command and process output details."""
+
         super().__init__(message)
         self.command = command
         self.stdout = stdout
@@ -33,6 +39,8 @@ class MergewayCLIError(RuntimeError):
 
 
 class Database:
+    """High-level Python interface for a Mergeway repository."""
+
     def __init__(
         self,
         config_path: str | Path,
@@ -40,24 +48,34 @@ class Database:
         classes_module: ModuleType | str | Path | None = None,
         cli_binary: str = "mergeway-cli",
     ) -> None:
+        """Create a repository wrapper from a ``mergeway.yaml`` path."""
+
         self.config_path = Path(config_path).resolve()
         self.root = self.config_path.parent
         self.cli_binary = cli_binary
         self.classes_module = self._load_classes_module(classes_module)
 
     def list_entities(self) -> list[str]:
+        """Return the entity names discovered in the repository schema."""
+
         stdout = self._run("entity", "list", output_format="json")
         return [line.strip() for line in stdout.splitlines() if line.strip()]
 
     def entity_schema(self, entity: str) -> dict[str, Any]:
+        """Return the normalized Mergeway schema for one entity."""
+
         return self._run_json("entity", "show", entity)
 
     def get(self, entity: str | type[GeneratedModel], object_id: str) -> Any:
+        """Fetch one object by identifier."""
+
         entity_name = self._entity_name(entity)
         payload = self._run_json("get", object_id, "--type", entity_name)
         return self._cast_one(entity_name, payload)
 
     def list(self, entity: str | type[GeneratedModel]) -> list[Any]:
+        """Return all objects for one entity."""
+
         entity_name = self._entity_name(entity)
         exported = self.export(entity_name)
         return exported if isinstance(exported, list) else exported.get(entity_name, [])
@@ -69,6 +87,8 @@ class Database:
         *,
         object_id: str | None = None,
     ) -> Any:
+        """Create an object and return the stored value when it can be reloaded."""
+
         entity_name = self._entity_name(entity)
         normalized_payload = self._normalize_payload(payload)
         self._run_with_payload(
@@ -91,6 +111,8 @@ class Database:
         *,
         merge: bool = False,
     ) -> Any:
+        """Update an object and return the refreshed value."""
+
         entity_name = self._entity_name(entity)
         normalized_payload = self._normalize_payload(payload)
         args = ["update", "--type", entity_name, "--id", object_id]
@@ -100,10 +122,14 @@ class Database:
         return self.get(entity_name, object_id)
 
     def delete(self, entity: str | type[GeneratedModel], object_id: str) -> str:
+        """Delete an object by identifier."""
+
         entity_name = self._entity_name(entity)
         return self._run("delete", object_id, "--type", entity_name, yes=True).strip()
 
     def validate(self, *, phases: list[str] | None = None) -> str:
+        """Run repository validation and return the CLI output."""
+
         args: list[str] = ["validate"]
         for phase in phases or []:
             args.extend(["--phase", phase])
@@ -116,6 +142,8 @@ class Database:
         lint: bool = False,
         stdout: bool = False,
     ) -> str:
+        """Run repository formatting operations."""
+
         args: list[str] = ["fmt", *[str(path) for path in paths]]
         if stdout:
             args.append("--stdout")
@@ -126,6 +154,8 @@ class Database:
         return self._run(*args)
 
     def export(self, *entities: str | type[GeneratedModel]) -> Any:
+        """Export repository data, optionally restricted to specific entities."""
+
         entity_names = [self._entity_name(entity) for entity in entities]
         payload = self._run_json("export", *entity_names)
         if not entity_names:
@@ -142,6 +172,8 @@ class Database:
         }
 
     def generate_classes(self, output_path: str | Path) -> Path:
+        """Generate Python classes from the repository schema."""
+
         rendered_path = render_classes(self, output_path)
         self.classes_module = self._load_classes_module(rendered_path)
         return rendered_path
