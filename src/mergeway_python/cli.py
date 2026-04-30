@@ -19,11 +19,16 @@ def build_parser() -> argparse.ArgumentParser:
         help="Generate Python classes from a mergeway.yaml schema.",
     )
     generate.add_argument("output", type=Path, help="Path to the generated module.")
-    generate.add_argument(
+    location_group = generate.add_mutually_exclusive_group(required=True)
+    location_group.add_argument(
         "--config",
-        required=True,
         type=Path,
         help="Path to the mergeway.yaml entry file.",
+    )
+    location_group.add_argument(
+        "--root",
+        type=Path,
+        help="Path to the repository root containing mergeway.yaml.",
     )
     generate.add_argument(
         "--cli-binary",
@@ -33,12 +38,18 @@ def build_parser() -> argparse.ArgumentParser:
     return parser
 
 
+def resolve_config_path(args: argparse.Namespace) -> Path:
+    if args.config is not None:
+        return args.config
+    return args.root / "mergeway.yaml"
+
+
 def main(argv: Sequence[str] | None = None) -> int:
     parser = build_parser()
     args = parser.parse_args(argv)
 
     if args.command == "generate":
-        database = Database(args.config, cli_binary=args.cli_binary)
+        database = Database(resolve_config_path(args), cli_binary=args.cli_binary)
         output_path = database.generate_classes(args.output)
         print(output_path)
         return 0
