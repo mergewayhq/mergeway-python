@@ -6,8 +6,8 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 
-from mergeway_python.codegen import generate_classes
-from mergeway_python.database import Database
+from mergeway.codegen import generate_classes
+from mergeway.database import Database
 
 from tests.test_codegen import FakeDatabase, SCHEMAS
 

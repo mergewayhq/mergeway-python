@@ -7,7 +7,7 @@ from contextlib import redirect_stdout
 from pathlib import Path
 from unittest.mock import patch
 
-from mergeway_python import cli
+from mergeway import cli
 
 
 class CLITests(unittest.TestCase):
@@ -18,7 +18,7 @@ class CLITests(unittest.TestCase):
             output = root / "models.py"
             config = root / "mergeway.yaml"
 
-            with patch("mergeway_python.cli.Database") as database_cls:
+            with patch("mergeway.cli.Database") as database_cls:
                 database = database_cls.return_value
                 database.generate_classes.return_value = output
 
@@ -41,7 +41,7 @@ class CLITests(unittest.TestCase):
             output = root / "models.py"
             config = root / "custom-mergeway.yaml"
 
-            with patch("mergeway_python.cli.Database") as database_cls:
+            with patch("mergeway.cli.Database") as database_cls:
                 database = database_cls.return_value
                 database.generate_classes.return_value = output
 

@@ -5,7 +5,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from mergeway_python.database import Database
+from mergeway.database import Database
 
 
 EXAMPLE_ROOT = Path(__file__).resolve().parent / "fixtures" / "full"

@@ -51,7 +51,7 @@ the repository config.
 ```python
 from pathlib import Path
 
-from mergeway_python import Database
+from mergeway import Database
 
 repo_root = Path("/path/to/mergeway-repo")
 
@@ -222,7 +222,7 @@ automatically, so future reads return typed objects.
 ```python
 from pathlib import Path
 
-from mergeway_python import Database
+from mergeway import Database
 
 repo_root = Path("/path/to/mergeway-repo")
 

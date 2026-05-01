@@ -6,7 +6,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from mergeway_python.codegen import generate_classes
+from mergeway.codegen import generate_classes
 
 
 SCHEMAS = {

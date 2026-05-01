@@ -40,7 +40,7 @@ syncing the environment:
 UV_CACHE_DIR=.cache/uv uv run python - <<'PY'
 from pathlib import Path
 
-from mergeway_python import Database
+from mergeway import Database
 
 repo_root = Path("tests/fixtures/full")
 db = Database(repo_root / "mergeway.yaml")

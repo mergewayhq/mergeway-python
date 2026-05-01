@@ -41,7 +41,7 @@ class ModelGenerator:
             "from dataclasses import dataclass",
             "from enum import Enum",
             "from typing import Any, ClassVar",
-            "from mergeway_python.models import GeneratedModel",
+            "from mergeway.models import GeneratedModel",
         ]
         sections = [
             '"""Generated Mergeway entity models."""',

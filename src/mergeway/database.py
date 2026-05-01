@@ -301,7 +301,7 @@ class Database:
 
     def _load_module_from_path(self, path: Path) -> ModuleType:
         resolved = path.resolve()
-        module_name = f"mergeway_python_generated_{abs(hash(resolved))}"
+        module_name = f"mergeway_generated_{abs(hash(resolved))}"
         spec = importlib.util.spec_from_file_location(module_name, resolved)
         if spec is None or spec.loader is None:
             raise ImportError(f"Could not load generated module from {resolved}")

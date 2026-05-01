@@ -1,4 +1,4 @@
-"""Public package exports for mergeway-python."""
+"""Public package exports for mergeway."""
 
 from .codegen import generate_classes
 from .database import Database, MergewayCLIError

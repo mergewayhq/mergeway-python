@@ -1,4 +1,4 @@
-"""Command-line entrypoints for mergeway-python."""
+"""Command-line entrypoints for mergeway."""
 
 from __future__ import annotations
 
@@ -51,7 +51,7 @@ def resolve_config_path(args: argparse.Namespace) -> Path:
 
 
 def main(argv: Sequence[str] | None = None) -> int:
-    """Run the mergeway-python CLI."""
+    """Run the mergeway CLI."""
 
     parser = build_parser()
     args = parser.parse_args(argv)
