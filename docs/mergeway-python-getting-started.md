@@ -1,4 +1,11 @@
-# mergeway-python Getting Started
+---
+title: "mergeway-python Getting Started"
+linkTitle: "Python SDK"
+description: "Extend your Mergeway database with functionality in Python"
+weight: 30
+cascade:
+  type: docs
+---
 
 This guide shows how to use `mergeway-python` with an existing Mergeway
 repository. It covers:
@@ -261,3 +268,4 @@ print(created.to_payload())
 print(loaded.to_payload())
 print(updated.to_payload())
 ```
+
