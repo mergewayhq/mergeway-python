@@ -1,21 +1,16 @@
 ---
-title: "mergeway-python Getting Started"
-linkTitle: "Python SDK"
-description: "Extend your Mergeway database with functionality in Python"
+title: "Get Started with mergeway-python"
+linkTitle: "Getting Started"
+description: "Step-by-step guide to using mergeway-python with a Mergeway repository"
 weight: 30
-cascade:
-  type: docs
 ---
 
-This guide shows how to use `mergeway-python` with an existing Mergeway
-repository. It covers:
+This guide walks through the standard workflow for using `mergeway-python` with
+an existing Mergeway repository. By the end, you will have generated Python
+models, connected to the repository, and run common read, write, and
+repository-level operations.
 
-- generating Python models from `mergeway.yaml`
-- connecting to the repository from Python
-- basic CRUD operations
-- common repository-level operations
-
-## Prerequisites
+## Before You Start
 
 You need:
 
@@ -23,7 +18,7 @@ You need:
 - `mergeway-cli` available on `PATH`
 - an existing Mergeway repository with a `mergeway.yaml` file
 
-## 1. Generate Python Models
+## Step 1: Generate Python Models
 
 You can generate Python classes for an existing repository with the package CLI.
 
@@ -50,7 +45,7 @@ This writes a Python module containing:
 - enums for native Mergeway enum fields
 - an `ENTITY_REGISTRY` used by the runtime
 
-## 2. Connect to a Repository
+## Step 2: Connect to a Repository
 
 Once you have generated models, create a `Database` instance and point it at
 the repository config.
@@ -71,7 +66,7 @@ db = Database(
 If you do not pass `classes_module`, the wrapper still works, but reads return
 plain dictionaries instead of typed objects.
 
-## 3. Read Data
+## Step 3: Read Data
 
 ### Get one object
 
@@ -100,7 +95,7 @@ for post in posts:
     print(post.id, post.status)
 ```
 
-## 4. Create Objects
+## Step 4: Create Objects
 
 You can create objects with generated model classes.
 
@@ -135,7 +130,7 @@ db.create(
 )
 ```
 
-## 5. Update Objects
+## Step 5: Update Objects
 
 Replace the stored object:
 
@@ -166,14 +161,14 @@ db.update(
 )
 ```
 
-## 6. Delete Objects
+## Step 6: Delete Objects
 
 ```python
 message = db.delete("User", "user-cara")
 print(message)
 ```
 
-## 7. Repository Operations
+## Step 7: Run Repository Operations
 
 ### Validate the repository
 
@@ -209,7 +204,7 @@ snapshot = db.export()
 print(snapshot["User"])
 ```
 
-## 8. Generate Models Programmatically
+## Step 8: Generate Models Programmatically
 
 You can generate the model file from Python instead of the CLI:
 
@@ -269,3 +264,13 @@ print(loaded.to_payload())
 print(updated.to_payload())
 ```
 
+## What You Learned
+
+You have seen the standard `mergeway-python` workflow from start to finish:
+generate Python models from a Mergeway schema, connect a `Database` instance to
+the repository, read and write data, and run repository operations such as
+validation and formatting.
+
+With these steps in place, you can use Python as a typed automation layer on
+top of an existing Mergeway repository while keeping `mergeway-cli` as the
+source of truth underneath.
