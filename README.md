@@ -1,8 +1,11 @@
 # mergeway-python
 
-`mergeway-python` is a Python automation layer for Mergeway repositories. It
+`mergeway-python` is a Python automation layer for Mergeway repositories. The
+published PyPI package is [`mergeway`](https://pypi.org/project/mergeway/). It
 wraps `mergeway-cli`, uses the CLI's JSON output as its data boundary, and can
 generate typed Python models from a repository's `mergeway.yaml` schema.
+For the broader Mergeway toolset, see the main website:
+<https://mergewayhq.github.io/>
 
 ## Goals
 
@@ -18,31 +21,29 @@ generate typed Python models from a repository's `mergeway.yaml` schema.
 Install the package into your Python environment:
 
 ```bash
-pip install .
+pip install mergeway
 ```
 
-If you are installing from a local checkout and want editable installs while
-using the package:
+If you are working from a local checkout and want an editable install:
 
 ```bash
 pip install -e .
 ```
 
-If `mergeway-cli` is not already available in your environment, install it
-using the distribution method you use for Mergeway in your organization.
+If `mergeway-cli` is not already available in your environment, install it by
+following the official installation guide:
+<https://mergewayhq.github.io/cli/getting-started/installation/>
 
 ## Quick Example
 
-This example is copy-paste runnable from a checkout of this repository after
-syncing the environment:
+This example assumes you already have a Mergeway repository on disk:
 
-```bash
-UV_CACHE_DIR=.cache/uv uv run python - <<'PY'
+```python
 from pathlib import Path
 
 from mergeway import Database
 
-repo_root = Path("tests/fixtures/full")
+repo_root = Path("/path/to/mergeway-repo")
 db = Database(repo_root / "mergeway.yaml")
 
 db.generate_classes(repo_root / "generated_models.py")
@@ -52,11 +53,11 @@ posts = db.export("Post")
 
 print(user.to_payload())
 print([post.title for post in posts])
-PY
 ```
 
 ## Full Docs
 
-- [Product documentation](.local/docs/product.md)
-- [Tech stack documentation](.local/docs/tech-stack.md)
-- [Contributing guide](CONTRIBUTING.md)
+- [Getting started](docs/mergeway-python-getting-started.md)
+
+## Contributing
+Please see [CONTRIBUTING.md](./CONTRIBUTING.md)
